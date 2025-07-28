@@ -3,6 +3,7 @@ package com.martin.school_student_api.controller;
 import com.martin.school_student_api.dto.school.SchoolRequestDTO;
 import com.martin.school_student_api.dto.school.SchoolResponseDTO;
 import com.martin.school_student_api.service.school.SchoolService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class SchoolController {
     }
 
     @PostMapping
-    public ResponseEntity<SchoolResponseDTO> createSchool (@RequestBody SchoolRequestDTO schoolRequestDTO) {
+    public ResponseEntity<SchoolResponseDTO> createSchool (@Valid @RequestBody SchoolRequestDTO schoolRequestDTO) {
         SchoolResponseDTO response = schoolService.save(schoolRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
