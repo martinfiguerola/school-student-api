@@ -41,4 +41,18 @@ public class SchoolController {
         List<SchoolResponseDTO> response = schoolService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SchoolResponseDTO> getSchool (@PathVariable Long id) {
+        Optional<SchoolResponseDTO> responseDTOOptional = schoolService.findById(id);
+        return responseDTOOptional.map(schoolResponseDTO -> ResponseEntity.status(HttpStatus.OK).body(schoolResponseDTO))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteSchool (@PathVariable Long id) {
+        if (schoolService.delete(id)) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("School with the given ID does not exist.");
+    }
+
 }

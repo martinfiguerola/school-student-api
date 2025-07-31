@@ -12,4 +12,7 @@ public interface SchoolService {
     SchoolResponseDTO save (SchoolRequestDTO schoolRequestDTO);
     Optional<SchoolResponseDTO> update (Long id, SchoolRequestDTO schoolRequestDTO);
     List<SchoolResponseDTO> findAll ();
+    Optional<SchoolResponseDTO> findById (Long id);
+    Boolean delete (Long id);
+
 }

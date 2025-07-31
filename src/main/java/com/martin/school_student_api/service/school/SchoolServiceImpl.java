@@ -34,10 +34,10 @@ public class SchoolServiceImpl implements SchoolService {
     @Transactional
     @Override
     public Optional<SchoolResponseDTO> update(Long id, SchoolRequestDTO schoolRequestDTO) {
-        // Step 1: Fetches a category by its ID from the database
+        // Step 1: Fetches a School entity by its ID from the database
         Optional<School> optionalSchool = schoolRepository.findById(id);
 
-        // Step 1:  If the category exists, update its fields, save the changes and convert to DTO.
+        // Step 1:  If the School exists, update its fields, save the changes and convert to DTO.
         // Otherwise, the method will return an empty Optional.
         return optionalSchool.map(school -> {
             school.setName(schoolRequestDTO.getName());
@@ -59,5 +59,28 @@ public class SchoolServiceImpl implements SchoolService {
         return schools.stream()
                 .map(SchoolDTOMapper::toDTO)
                 .toList();
+    }
+
+    @Override
+    public Optional<SchoolResponseDTO> findById(Long id) {
+        // 1. Fetches a School entity by its ID from the database.
+        Optional<School> optionalSchool = schoolRepository.findById(id);
+
+        // 2. If the School exists, convert it to DTO and return it
+        // Otherwise, the method will return an empty Optional.
+        return optionalSchool.map(SchoolDTOMapper::toDTO);
+    }
+
+    @Override
+    public Boolean delete(Long id) {
+        // 1. Fetches a School entity by its ID from the database.
+        Optional<School> optionalSchool = schoolRepository.findById(id);
+
+        // 2. If the School exists, delete it and return true;
+        // Otherwise, return false.
+        return optionalSchool.map(school -> {
+            schoolRepository.delete(school);
+            return true;
+        }).orElse(false);
     }
 }
