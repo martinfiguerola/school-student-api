@@ -18,13 +18,18 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public StudentResponseDTO save(StudentRequestDTO student) {
-        // 1. Retrieve a DTO and convert it to entity.
+        // Validate email uniqueness
+        if (studentRepository.existsByEmail(student.getEmail())){
+            throw new IllegalArgumentException("There is already a student with that email address: " + student.getEmail());
+        }
+
+        // 2. Retrieve a DTO and convert it to entity.
         Student convertedStudent = StudentDTOMapper.fromDTO(student);
 
-        // 2. Persist the converted Student in the database.
+        // 3. Persist the converted Student in the database.
         Student savedStudent = studentRepository.save(convertedStudent);
 
-        // 3. Convert the Student entity to DTO for response.
+        // 4. Convert the Student entity to DTO for response.
         return StudentDTOMapper.toDTO(savedStudent);
     }
 }
