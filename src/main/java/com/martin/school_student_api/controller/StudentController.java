@@ -40,4 +40,19 @@ public class StudentController {
         return responseDTO.map(studentResponseDTO -> ResponseEntity.status(HttpStatus.OK).body(studentResponseDTO))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<StudentResponseDTO> updateStudent (@PathVariable Long id, @RequestBody StudentRequestDTO studentRequestDTO) {
+        Optional<StudentResponseDTO> dtoOptional = studentService.update(id, studentRequestDTO);
+
+        return dtoOptional
+                .map(studentResponseDTO -> ResponseEntity.status(HttpStatus.OK).body(studentResponseDTO))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteStudent (@PathVariable Long id) {
+        if (studentService.delete(id)) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student with given ID does not exist.");
+    }
 }

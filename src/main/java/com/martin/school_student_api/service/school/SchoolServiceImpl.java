@@ -61,6 +61,7 @@ public class SchoolServiceImpl implements SchoolService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<SchoolResponseDTO> findById(Long id) {
         // 1. Fetches a School entity by its ID from the database.
@@ -71,6 +72,7 @@ public class SchoolServiceImpl implements SchoolService {
         return optionalSchool.map(SchoolDTOMapper::toDTO);
     }
 
+    @Transactional
     @Override
     public Boolean delete(Long id) {
         // 1. Fetches a School entity by its ID from the database.

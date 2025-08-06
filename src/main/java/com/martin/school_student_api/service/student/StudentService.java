@@ -12,4 +12,6 @@ public interface StudentService {
     StudentResponseDTO save (StudentRequestDTO student);
     List<StudentResponseDTO> findAll ();
     Optional<StudentResponseDTO> findById (Long id);
+    Optional<StudentResponseDTO> update (Long id, StudentRequestDTO studentRequestDTO);
+    Boolean delete (Long id);
 }
