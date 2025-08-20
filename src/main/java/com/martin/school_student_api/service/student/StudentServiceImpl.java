@@ -9,8 +9,11 @@ import com.martin.school_student_api.mapper.student.StudentDTOMapper;
 import com.martin.school_student_api.repository.SchoolRepository;
 import com.martin.school_student_api.repository.StudentRepository;
 import com.martin.school_student_api.service.school.SchoolService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -56,14 +59,17 @@ public class StudentServiceImpl implements StudentService{
         return StudentDTOMapper.toDTO(savedStudent);
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public List<StudentResponseDTO> findAll() {
-        List<Student> students = studentRepository.findAll();
-        return students.stream()
-                .map(StudentDTOMapper::toDTO)
-                .toList();
+    @Transactional
+    @GetMapping
+    public Page<StudentResponseDTO> findAll (Pageable pageable){
 
+        // Get the page with the list of ordered students.
+        Page<Student> studentsPage = studentRepository.findAll(pageable);
+
+        // Convert that page of student entities into a page of student DTOs
+        //.map() method is used to convert each Student entity within the Page into a StudentResponseDTO,
+        // and it returns a new Page containing the transformed objects.
+        return  studentsPage.map(StudentDTOMapper::toDTO);
     }
 
     @Transactional(readOnly = true)

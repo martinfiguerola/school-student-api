@@ -6,6 +6,8 @@ import com.martin.school_student_api.dto.school.SchoolRequestDTO;
 import com.martin.school_student_api.dto.school.SchoolResponseDTO;
 import com.martin.school_student_api.mapper.school.SchoolDTOMapper;
 import com.martin.school_student_api.repository.SchoolRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,13 +55,12 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<SchoolResponseDTO> findAll() {
-        // 1. Retrieve all category entities from the database
-        List<School> schools = schoolRepository.findAll();
-        // 2. Convert each entity to DTO and return it
-        return schools.stream()
-                .map(SchoolDTOMapper::toDTO)
-                .toList();
+    public Page<SchoolResponseDTO> findAll(Pageable pageable) {
+
+        Page<School> schoolPage = schoolRepository.findAll(pageable);
+
+        return schoolPage.map(SchoolDTOMapper::toDTO);
+
     }
 
     @Transactional(readOnly = true)

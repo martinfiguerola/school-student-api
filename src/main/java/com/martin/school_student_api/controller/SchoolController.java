@@ -5,6 +5,8 @@ import com.martin.school_student_api.dto.school.SchoolRequestDTO;
 import com.martin.school_student_api.dto.school.SchoolResponseDTO;
 import com.martin.school_student_api.service.school.SchoolService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +40,8 @@ public class SchoolController {
     }
 
     @GetMapping
-    public ResponseEntity<List<SchoolResponseDTO>> getSchools () {
-        List<SchoolResponseDTO> response = schoolService.findAll();
+    public ResponseEntity<Page<SchoolResponseDTO>> getSchools (Pageable pageable) {
+        Page<SchoolResponseDTO> response = schoolService.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
