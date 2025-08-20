@@ -1,5 +1,6 @@
 package com.martin.school_student_api.dto.student;
 
+import com.martin.school_student_api.domain.School;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -17,4 +18,5 @@ public class StudentRequestDTO {
     private String lastname;
     @Email
     private String email;
+    private Long school;
 }
