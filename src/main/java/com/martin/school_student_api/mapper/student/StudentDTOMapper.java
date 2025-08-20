@@ -1,6 +1,9 @@
 package com.martin.school_student_api.mapper.student;
 
 import com.martin.school_student_api.domain.Student;
+import com.martin.school_student_api.dto.school.SchoolRefDTO;
+import com.martin.school_student_api.dto.student.StudentDetailDTO;
+import com.martin.school_student_api.dto.student.StudentRefDTO;
 import com.martin.school_student_api.dto.student.StudentRequestDTO;
 import com.martin.school_student_api.dto.student.StudentResponseDTO;
 
@@ -14,6 +17,24 @@ public class StudentDTOMapper {
         return student;
     }
 
+    public static StudentDetailDTO toDTOWithSchool (Student student) {
+        StudentDetailDTO studentDetailDTO = new StudentDetailDTO();
+        SchoolRefDTO schoolRefDTO = new SchoolRefDTO();
+
+        schoolRefDTO.setId(student.getSchool().getId());
+        schoolRefDTO.setName(student.getSchool().getName());
+
+        studentDetailDTO.setId(student.getId());
+        studentDetailDTO.setFirstname(student.getFirstname());
+        studentDetailDTO.setLastname(student.getLastname());
+        studentDetailDTO.setEmail(student.getEmail());
+
+        studentDetailDTO.setSchool(schoolRefDTO);
+
+        return studentDetailDTO;
+
+    }
+
     public static StudentResponseDTO toDTO (Student student) {
         StudentResponseDTO studentResponseDTO = new StudentResponseDTO();
         studentResponseDTO.setId(student.getId());
@@ -21,5 +42,12 @@ public class StudentDTOMapper {
         studentResponseDTO.setLastname(student.getLastname());
         studentResponseDTO.setEmail(student.getEmail());
         return studentResponseDTO;
+    }
+
+    public static StudentRefDTO toRefDTO (Student student) {
+        StudentRefDTO studentRefDTO = new StudentRefDTO();
+        studentRefDTO.setId(student.getId());
+        studentRefDTO.setFirstname(student.getFirstname());
+        return studentRefDTO;
     }
 }

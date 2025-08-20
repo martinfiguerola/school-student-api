@@ -1,6 +1,7 @@
 package com.martin.school_student_api.service.school;
 
 import com.martin.school_student_api.domain.School;
+import com.martin.school_student_api.dto.school.SchoolDetailDTO;
 import com.martin.school_student_api.dto.school.SchoolRequestDTO;
 import com.martin.school_student_api.dto.school.SchoolResponseDTO;
 import com.martin.school_student_api.mapper.school.SchoolDTOMapper;
@@ -63,13 +64,13 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Transactional(readOnly = true)
     @Override
-    public Optional<SchoolResponseDTO> findById(Long id) {
+    public Optional<SchoolDetailDTO> findById(Long id) {
         // 1. Fetches a School entity by its ID from the database.
         Optional<School> optionalSchool = schoolRepository.findById(id);
 
         // 2. If the School exists, convert it to DTO and return it
         // Otherwise, the method will return an empty Optional.
-        return optionalSchool.map(SchoolDTOMapper::toDTO);
+        return optionalSchool.map(SchoolDTOMapper::toSchoolDetailDTO);
     }
 
     @Transactional

@@ -1,5 +1,6 @@
 package com.martin.school_student_api.controller;
 
+import com.martin.school_student_api.dto.student.StudentDetailDTO;
 import com.martin.school_student_api.dto.student.StudentRequestDTO;
 import com.martin.school_student_api.dto.student.StudentResponseDTO;
 import com.martin.school_student_api.service.student.StudentService;
@@ -35,9 +36,9 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentResponseDTO> getStudent(@PathVariable Long id) {
-        Optional<StudentResponseDTO> responseDTO = studentService.findById(id);
-        return responseDTO.map(studentResponseDTO -> ResponseEntity.status(HttpStatus.OK).body(studentResponseDTO))
+    public ResponseEntity<StudentDetailDTO> getStudent(@PathVariable Long id) {
+        Optional<StudentDetailDTO> responseDTO = studentService.findById(id);
+        return responseDTO.map(studentDetailDTO -> ResponseEntity.status(HttpStatus.OK).body(studentDetailDTO))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
